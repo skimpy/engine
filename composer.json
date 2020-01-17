@@ -1,0 +1,45 @@
+{
+    "name": "skimpy/engine",
+    "description": "Skimpy CMS Engine",
+    "homepage": "https://github.com/skimpy/engine",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Justin Tallant",
+            "email": "jtallant07@gmail.com",
+            "homepage": "http://justintallant.com"
+        },
+        {
+            "name": "Casey McLaughlin",
+            "homepage": "https://github.com/caseyamcl"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "laravel/lumen-framework": "^6.0",
+        "symfony/yaml": "~3.2",
+        "michelf/php-markdown": "~1.4.1",
+        "willdurand/negotiation": "~2.0",
+        "doctrine/orm": "2.7.*",
+        "symfony/filesystem": "^4.0",
+        "symfony/http-foundation": "^4.3",
+        "psr/container": "^1.0@dev",
+        "laravel-doctrine/orm": "1.5.*",
+        "rcrowe/twigbridge": "^0.11.0@dev"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^5.1@dev",
+        "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev"
+    },
+    "autoload": {
+        "psr-4": {"Skimpy\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"spec\\": "spec/"}
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpspec run",
+        "coverage": "./vendor/bin/phpspec run --config phpspec-html.yml"
+    },
+    "minimum-stability": "dev"
+}
