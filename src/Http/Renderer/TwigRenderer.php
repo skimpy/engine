@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class TwigRenderer implements Renderer
 {
     protected $twig;
-
     protected $templateResolver;
 
     public function __construct(Environment $twig, TemplateResolver $templateResolver = null)
