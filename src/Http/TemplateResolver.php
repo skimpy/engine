@@ -23,6 +23,10 @@ class TemplateResolver
             return $entity->getTemplate();
         }
 
+        if ($entity instanceof ContentItem && $entity->isIndex()) {
+            return 'index.twig';
+        }
+
         if ($entity instanceof ContentItem) {
             $uriSegments = array_reverse(explode('/', $entity->getUri()));
             $templates = $this->getTemplates();
