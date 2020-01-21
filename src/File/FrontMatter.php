@@ -64,6 +64,8 @@ class FrontMatter
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
     }
 
     public function getSeoTitle(): ?string
