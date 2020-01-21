@@ -15,6 +15,7 @@ class ContentFile
     protected $file;
     protected $content;
     protected $frontMatter;
+    protected $type;
 
     public function __construct(
         SplFileInfo $file,
@@ -151,11 +152,16 @@ class ContentFile
 
     public function getType(): string
     {
-        if ($this->isTopLevel()) {
-            return 'entry';
+        if ($this->type) {
+            return $this->type;
         }
 
-        return $this->getUppermostParentDir();
+        return $this->isTopLevel() ? 'entry' : $this->getUppermostParentDir();
+    }
+
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
     }
 
     /**

@@ -28,9 +28,10 @@ class FrontMatter
      * - Can be overridden/set via front matter
      * - Are not associations between entities
      */
-    const CONFIGURABLE_KEYS = 'title|seoTitle|date|description|excerpt|template';
+    const CONFIGURABLE_KEYS = 'title|type|seoTitle|date|description|excerpt|template';
 
     protected $title;
+    protected $type;
     protected $seoTitle;
     protected $date;
     protected $description;
@@ -53,6 +54,16 @@ class FrontMatter
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
     }
 
     public function getSeoTitle(): ?string

@@ -121,7 +121,7 @@ class FrontMatterSpec extends ObjectBehavior
 
     function it_has_configurable_keys()
     {
-        $keys = ['title', 'seoTitle', 'date', 'description', 'excerpt', 'template'];
+        $keys = ['title', 'type', 'seoTitle', 'date', 'description', 'excerpt', 'template'];
         $this->getConfigurableKeys()->shouldReturn($keys);
     }
 

@@ -42,7 +42,11 @@ class FileToContentFile
         $html = $this->getHtml($fileContents);
         $frontMatter = $this->transformer->transform($this->getFrontMatterData($fileContents));
 
-        return new ContentFile($file, $html, $frontMatter);
+        $contentFile = new ContentFile($file, $html, $frontMatter);
+
+        $contentFile->setType($frontMatter->getType());
+
+        return $contentFile;
     }
 
     public function getHtml(string $content): string
