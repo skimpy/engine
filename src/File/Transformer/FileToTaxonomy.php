@@ -42,7 +42,8 @@ class FileToTaxonomy
         $tax = new Taxonomy(
             $taxonomyFile->getName(),
             $taxonomyFile->getPluralName(),
-            $taxonomyFile->getSlug()
+            $taxonomyFile->getSlug(),
+            $taxonomyFile->getConfig()
         );
 
         foreach ($taxonomyFile->getTerms() as $data) {

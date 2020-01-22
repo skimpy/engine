@@ -23,13 +23,15 @@ class TaxonomyFile
 
     protected $pluralName;
     protected $terms;
+    protected $config = [];
 
-    public function __construct(string $slug, string $name, string $pluralName, array $terms)
+    public function __construct(string $slug, string $name, string $pluralName, array $terms, array $config)
     {
         $this->slug = $slug;
         $this->name = $name;
         $this->pluralName = $pluralName;
         $this->terms = $terms;
+        $this->config = $config;
     }
 
     public function getSlug(): string
@@ -50,5 +52,10 @@ class TaxonomyFile
     public function getTerms(): array
     {
         return $this->terms;
+    }
+
+    public function getConfig(): array
+    {
+        return $this->config;
     }
 }

@@ -35,6 +35,7 @@ class FileToTaxonomyFile
     public function transform(SplFileInfo $file): TaxonomyFile
     {
         $data = $this->parser->parse($file->getContents());
+
         $missingFields = $this->getMissingFields($data);
 
         if (false === empty($missingFields)) {
@@ -53,8 +54,16 @@ class FileToTaxonomyFile
             $slug,
             $data['name'],
             $data['plural_name'],
-            $data['terms']
+            $data['terms'],
+            $this->getConfig($data)
         );
+    }
+
+    protected function getConfig(array $data): array
+    {
+        return [
+            'has_public_terms_route' => $data['has_public_terms_route'] ?? true,
+        ];
     }
 
     protected function getMissingFields(array $data): array

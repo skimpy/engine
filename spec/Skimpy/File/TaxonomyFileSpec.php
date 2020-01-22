@@ -8,7 +8,8 @@ class TaxonomyFileSpec extends ObjectBehavior
     function let()
     {
         $data = $this->getData();
-        $this->beConstructedWith($data['slug'], $data['name'], $data['pluralName'], $data['terms']);
+        $config = [];
+        $this->beConstructedWith($data['slug'], $data['name'], $data['pluralName'], $data['terms'], $config);
     }
 
     protected function getData()

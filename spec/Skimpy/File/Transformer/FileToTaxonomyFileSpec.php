@@ -45,11 +45,16 @@ class FileToTaxonomyFileSpec extends ObjectBehavior
         $file->getFilename()->willReturn('categories.yaml');
         $file->getExtension()->willReturn('yaml');
 
+        $config = [
+            'has_public_terms_route' => true,
+        ];
+
         $taxonomyFile = new TaxonomyFile(
             'categories',
             $data['name'],
             $data['plural_name'],
-            $data['terms']
+            $data['terms'],
+            $config
         );
 
         $this->transform($file)->shouldBeLike($taxonomyFile);

@@ -77,7 +77,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
         $this->name = $name;
         $this->pluralName = $pluralName;
         $this->uri = $uri;
-        $this->config = $config;
+        $this->config = $config ?? [];
 
         $this->terms = new ArrayCollection;
     }

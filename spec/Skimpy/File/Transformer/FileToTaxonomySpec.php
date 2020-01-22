@@ -24,13 +24,13 @@ class FileToTaxonomySpec extends ObjectBehavior
     function it_transforms_a_file_into_a_taxonomy(
         FileToTaxonomyFile $transformer,
         SplFileInfo $file,
-        TaxonomyFile $taxonomyFile,
-        Term $term
+        TaxonomyFile $taxonomyFile
     ) {
         $transformer->transform($file)
             ->willReturn($taxonomyFile)
         ;
 
+        $taxonomyFile->getConfig()->willReturn([]);
         $taxonomyFile->getName()->willReturn('Category');
         $taxonomyFile->getPluralName()->willReturn('Categories');
         $taxonomyFile->getSlug()->willReturn('categories');
