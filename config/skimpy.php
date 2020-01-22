@@ -13,7 +13,7 @@ return [
     # Whether or not to rebuild the database from the blog content
     # on each request. You can probably even leave this on in production
     # if you site is pretty small and you want to keep things super simple.
-    'auto_rebuild' => true,
+    'auto_rebuild' => env('AUTO_REBUILD', true),
 
     'site' => [
         'title'   => env('SITE_TITLE', 'Skimpy'),
