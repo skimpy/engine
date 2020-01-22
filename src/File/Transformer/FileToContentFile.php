@@ -73,6 +73,12 @@ class FileToContentFile
 
     protected function hasFrontMatter(string $content): bool
     {
+        $contentEndsWithSeparator = PHP_EOL.FrontMatter::SEPARATOR == substr($content, -4);
+
+        if ($contentEndsWithSeparator) {
+            return true;
+        }
+
         return false !== strpos($content, PHP_EOL.FrontMatter::SEPARATOR.PHP_EOL);
     }
 }
