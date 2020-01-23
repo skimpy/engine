@@ -9,6 +9,7 @@ use RuntimeException;
 use Skimpy\Contracts\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Skimpy\Contracts\Classifiable;
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -184,7 +185,7 @@ class ContentItem implements Classifiable, Entity
     /**
      * Get magic method is used to provide dynamic access to taxonomies
      *
-     * If this content item doesn't have the taxonomy, then return null
+     * If this content item doesn't have the taxonomy, then throw an exception
      *
      * Example usage in twig:
      * {% for cat in post.categories %}
@@ -193,13 +194,17 @@ class ContentItem implements Classifiable, Entity
      *
      * @param string $method Name of the taxonomy that access is attempted on
      */
-    public function __call($method, $args): ?Taxonomy
+    public function __call($method, $args): ?ArrayCollection
     {
-        if ($this->hasTaxonomy($method)) {
-            return $this->getTaxonomy($method);
+        if (false === $this->hasTaxonomy($method)) {
+            throw new RuntimeException(__CLASS__ . " doesn't contain property or taxonomy: $method");
         }
 
-        throw new RuntimeException(__CLASS__." doesn't contain property or taxonomy: $method");
+        $taxonomy = $this->getTaxonomy($method);
+
+        return $this->getTerms()->filter(function ($term) use ($taxonomy) {
+            return $term->isTaxonomy($taxonomy);
+        });
     }
 
     public function getKey(): string
@@ -291,9 +296,9 @@ class ContentItem implements Classifiable, Entity
     }
 
     /**
-     * @return ArrayCollection|Term[]
+     * @return ArrayCollection|PersistentCollection|Term[]
      */
-    public function getTerms(): ArrayCollection
+    public function getTerms()
     {
         return $this->terms;
     }
@@ -347,7 +352,7 @@ class ContentItem implements Classifiable, Entity
     /**
      * @return ArrayCollection|Taxonomy[]
      */
-    public function getTaxonomies(): ArrayCollection
+    public function getTaxonomies()
     {
         $taxonomies = new ArrayCollection;
 

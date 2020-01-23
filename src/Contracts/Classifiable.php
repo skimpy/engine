@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Skimpy\Contracts;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Defines an entity that has the potential to have taxonomies and terms
  *
@@ -13,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 interface Classifiable
 {
-    public function getTaxonomies(): ArrayCollection;
+    public function getTaxonomies();
 
-    public function getTerms(): ArrayCollection;
+    public function getTerms();
 }

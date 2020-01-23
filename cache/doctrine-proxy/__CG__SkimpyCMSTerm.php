@@ -227,6 +227,17 @@ class Term extends \Skimpy\CMS\Term implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function isTaxonomy(\Skimpy\CMS\Taxonomy $taxonomy): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isTaxonomy', [$taxonomy]);
+
+        return parent::isTaxonomy($taxonomy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName(): string
     {
 

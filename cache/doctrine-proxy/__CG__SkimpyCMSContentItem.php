@@ -179,7 +179,7 @@ class ContentItem extends \Skimpy\CMS\ContentItem implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
-    public function __call($method, $args): ?\Skimpy\CMS\Taxonomy
+    public function __call($method, $args): ?\Doctrine\Common\Collections\ArrayCollection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, '__call', [$method, $args]);
@@ -326,7 +326,7 @@ class ContentItem extends \Skimpy\CMS\ContentItem implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getTerms(): \Doctrine\Common\Collections\ArrayCollection
+    public function getTerms()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTerms', []);
@@ -392,7 +392,7 @@ class ContentItem extends \Skimpy\CMS\ContentItem implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getTaxonomies(): \Doctrine\Common\Collections\ArrayCollection
+    public function getTaxonomies()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTaxonomies', []);

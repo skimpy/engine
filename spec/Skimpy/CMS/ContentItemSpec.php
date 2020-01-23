@@ -119,8 +119,8 @@ class ContentItemSpec extends ObjectBehavior
 
     /**
      * Calling contentItem->taxonomyKey() (post->categories())
-     * should return the taxonomy with a key of 'categories'
-     * given the ContentItem has a term belonging to that taxonomy.
+     * should return an array collection of terms in the "categories"
+     * taxonomy that are assigned to this post.
      */
     function it_returns_a_taxonomy_if_you_access_a_property_matching_the_taxonomy_key()
     {
@@ -128,7 +128,7 @@ class ContentItemSpec extends ObjectBehavior
 
         $this->addTerm($term);
 
-        $this->categories()->shouldHaveType(Taxonomy::class);
+        $this->categories()->shouldHaveType(ArrayCollection::class);
     }
 
     function it_throws_an_exception_when_you_try_and_access_a_property_that_does_not_exist_and_is_not_a_taxonomy_key()

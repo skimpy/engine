@@ -90,6 +90,11 @@ class Term implements Entity
         return $this->taxonomy;
     }
 
+    public function isTaxonomy(Taxonomy $taxonomy): bool
+    {
+        return $this->taxonomy->getId() == $taxonomy->getId();
+    }
+
     public function getName(): string
     {
         return $this->name;
