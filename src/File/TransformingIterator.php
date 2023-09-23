@@ -57,6 +57,7 @@ class TransformingIterator extends IteratorIterator
         return iterator_to_array($this);
     }
 
+    #[\ReturnTypeWillChange]
     public function current(?SplFileInfo $file = null)
     {
         $splFileInfo = $file ?: parent::current();

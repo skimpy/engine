@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
+use Traversable;
 
 /**
  * @ORM\Entity(repositoryClass="Skimpy\Repo\Taxonomies")
@@ -110,6 +111,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
     /**
      * @return ArrayCollection|PeristentCollection|Term[]
      */
+    #[\ReturnTypeWillChange]
     public function getTerms()
     {
         return $this->terms;
@@ -200,6 +202,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
     /**
      * @return ArrayCollection|PersistentCollection|Term[]
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getTerms();
