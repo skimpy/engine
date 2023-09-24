@@ -22,9 +22,4 @@ abstract class BaseRepo extends EntityRepository
     {
         return basename(str_replace('\\', '/', $this->getClassName()));
     }
-
-    protected function flatten(array $result): array
-    {
-        return array_flatten($result);
-    }
 }
