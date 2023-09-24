@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Skimpy\Lumen\Providers;
 
 use Skimpy\Skimpy;
+use Twig\TwigFilter;
 use Skimpy\CMS\Term;
 use Skimpy\Repo\Terms;
 use Skimpy\CMS\Taxonomy;
@@ -146,7 +147,7 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->configure('twigbridge');
         $this->app->register('TwigBridge\ServiceProvider');
 
-        $defaultDateFormat = new \Twig_SimpleFilter('date_default_format', function (\DateTime $date) {
+        $defaultDateFormat = new TwigFilter('date_default_format', function (\DateTime $date) {
             return $date->format(config('skimpy.site.date_format', 'Y-m-d H:i:s'));
         });
 
