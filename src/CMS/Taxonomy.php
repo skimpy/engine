@@ -67,7 +67,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
 
     public static function fromArray(array $data): self
     {
-        $config = isset($data['config']) ? $data['config'] : [];
+        $config = $data['config'] ?? [];
 
         return new static($data['name'], $data['pluralName'], $data['uri'], $config);
     }

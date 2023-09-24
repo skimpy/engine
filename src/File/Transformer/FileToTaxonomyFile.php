@@ -41,7 +41,7 @@ class FileToTaxonomyFile
         if (false === empty($missingFields)) {
             throw new TransformationFailure(sprintf(
                 'Missing required fields (%s) in taxonomy file: %s',
-                implode(', ', $this->getMissingFields($data)),
+                implode(', ', $missingFields),
                 $file->getRealPath()
             ));
         }
