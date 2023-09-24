@@ -7,9 +7,8 @@ namespace Skimpy\CMS;
 use Skimpy\Contracts\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
-use Traversable;
 
 /**
  * @ORM\Entity(repositoryClass="Skimpy\Repo\Taxonomies")
@@ -108,11 +107,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
         return $this->pluralName;
     }
 
-    /**
-     * @return ArrayCollection|PeristentCollection|Term[]
-     */
-    #[\ReturnTypeWillChange]
-    public function getTerms()
+    public function getTerms(): Collection
     {
         return $this->terms;
     }
@@ -169,7 +164,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
         return $term->first() ? $term->first() : null;
     }
 
-    protected function getTermsBy(string $prop, $value): ArrayCollection
+    protected function getTermsBy(string $prop, $value): Collection
     {
         $criteria = new Criteria(Criteria::expr()->eq($prop, $value));
 
@@ -199,11 +194,7 @@ class Taxonomy implements \IteratorAggregate, \Countable, Entity
         return $this->getKey();
     }
 
-    /**
-     * @return ArrayCollection|PersistentCollection|Term[]
-     */
-    #[\ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Collection
     {
         return $this->getTerms();
     }
