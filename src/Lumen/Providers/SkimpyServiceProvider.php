@@ -177,7 +177,6 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->bind(Renderer::class, NegotiatingRenderer::class);
     }
 
-
     private function contentCacheHandler(): void
     {
         $this->app->singleton(ContentCacheHandler::class, function(Application $app) {
