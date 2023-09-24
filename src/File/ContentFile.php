@@ -19,7 +19,7 @@ class ContentFile
 
     public function __construct(
         SplFileInfo $file,
-        ?string $content = '',
+        string $content,
         FrontMatter $frontMatter
     ) {
         $this->file = $file;

@@ -26,10 +26,12 @@ class BuildDatabase extends Command
         $this->setDescription('Rebuild database with all data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Building database...');
         $this->populator->populate();
         $output->writeln('<fg=green>Done!</fg=green>');
+
+        return Command::SUCCESS;
     }
 }

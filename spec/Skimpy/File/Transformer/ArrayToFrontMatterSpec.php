@@ -3,11 +3,9 @@
 namespace spec\Skimpy\File\Transformer;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Skimpy\CMS\Taxonomy;
 use Skimpy\CMS\Term;
+use Skimpy\CMS\Taxonomy;
+use PhpSpec\ObjectBehavior;
 use Skimpy\File\FrontMatter;
 use Skimpy\File\Transformer\TransformationFailure;
 

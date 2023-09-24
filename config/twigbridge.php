@@ -109,7 +109,7 @@ return [
             // 'TwigBridge\Extension\Laravel\Session',
             'TwigBridge\Extension\Laravel\Str',
             // 'TwigBridge\Extension\Laravel\Translator',
-            'TwigBridge\Extension\Laravel\Url',
+            // 'TwigBridge\Extension\Laravel\Url',
             'TwigBridge\Extension\Laravel\Model',
             // 'TwigBridge\Extension\Laravel\Gate',
 
