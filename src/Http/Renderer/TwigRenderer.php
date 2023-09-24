@@ -25,7 +25,7 @@ class TwigRenderer implements Renderer
         $this->templateResolver = $templateResolver ?? new TemplateResolver;
     }
 
-    public function render(Entity $entity, Request $request, $params = []): Response
+    public function render(Entity $entity, Request $request, ?array $params = []): Response
     {
         # params['entry'] = $entry
         $entityName = $entity->getEntityName();
