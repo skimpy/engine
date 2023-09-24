@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContentCacheHandler
 {
     protected $populator;
-
+    protected $filesystem;
     protected $buildIndicator;
 
     public function __construct(

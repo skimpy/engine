@@ -48,6 +48,7 @@ class FileToTaxonomySpec extends ObjectBehavior
         FileToTaxonomyFile $transformer,
         SplFileInfo $file
     ) {
+        $file->getRealPath()->willReturn('');
         $transformer->transform($file)->willThrow(new \Exception);
         $this->shouldThrow(new TransformationFailure)->duringTransform($file);
     }

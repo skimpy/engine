@@ -53,7 +53,10 @@ class FileToContentItemSpec extends ObjectBehavior
         FileToContentFile $transformer,
         SplFileInfo $file
     ) {
+        $file->getRealPath()->willReturn('');
+
         $transformer->transform($file)->willThrow(new \Exception('Some message'));
+
         $this->shouldThrow(new TransformationFailure('Some message'))->duringTransform($file);
     }
 }
