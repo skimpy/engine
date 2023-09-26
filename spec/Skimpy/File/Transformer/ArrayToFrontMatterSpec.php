@@ -79,7 +79,6 @@ class ArrayToFrontMatterSpec extends ObjectBehavior
         $frontMatter = $this->transform($data);
 
         $dt = new \DateTime($data['date']);
-        $date = $frontMatter->getDate();
 
         $frontMatter->getDate()->shouldBeLike($dt);
     }
