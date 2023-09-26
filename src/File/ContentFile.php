@@ -123,7 +123,7 @@ class ContentFile
     /**
      * URI to the content based on directory path
      *
-     # Directory       | URI
+     * Directory       | URI
      * ------------------------------------
      * foo/bar/baz.md  | foo/bar/baz
      *

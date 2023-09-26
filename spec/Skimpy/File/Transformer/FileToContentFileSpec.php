@@ -1,17 +1,13 @@
 <?php namespace spec\Skimpy\File\Transformer;
 
+use Michelf\Markdown;
 use Prophecy\Argument;
-use Skimpy\CMS\Taxonomy;
-use Skimpy\CMS\Term;
-use Skimpy\CMS\ContentItem;
 use Skimpy\File\ContentFile;
-use Skimpy\File\Transformer\ArrayToFrontMatter;
+use Skimpy\File\FrontMatter;
 use spec\Skimpy\ObjectBehavior;
 use Skimpy\Symfony\FinderFactory;
 use Symfony\Component\Finder\SplFileInfo;
-use Doctrine\Common\Collections\ArrayCollection;
-use Skimpy\File\FrontMatter;
-use Michelf\Markdown;
+use Skimpy\File\Transformer\ArrayToFrontMatter;
 
 class FileToContentFileSpec extends ObjectBehavior
 {

@@ -53,7 +53,11 @@ class EntityResolver
 
     public function getRepository(Entity $entity): EntityRepository
     {
-        $repo = $this->getRepositories()[get_class($entity)];
+        $repo = $this->getRepositories()[$entity::class] ?? null;
+
+        if (empty($repo)) {
+            throw new \LogicException('No repository found for ' . $entity::class);
+        }
 
         return $this->$repo;
     }
