@@ -1,12 +1,12 @@
 <?php namespace spec\Skimpy\CMS;
 
-use PhpSpec\ObjectBehavior;
-use Skimpy\CMS\ContentItem as Entry;
-use Skimpy\CMS\Taxonomy;
 use Skimpy\CMS\Term;
-use Skimpy\Repo\Entries;
-use Skimpy\Repo\Taxonomies;
 use Skimpy\Repo\Terms;
+use Skimpy\CMS\Taxonomy;
+use Skimpy\Repo\Entries;
+use PhpSpec\ObjectBehavior;
+use Skimpy\Repo\Taxonomies;
+use Skimpy\CMS\ContentItem as Entry;
 
 class EntityResolverSpec extends ObjectBehavior
 {
@@ -75,10 +75,8 @@ class EntityResolverSpec extends ObjectBehavior
         $this->resolve($uri)->shouldHaveType(Term::class);
     }
 
-    function it_returns_the_repo_for_the_entity(
-        Taxonomy $taxonomy,
-        Taxonomies $taxonomies
-    ) {
+    function it_returns_the_repo_for_the_entity(Taxonomies $taxonomies)
+    {
         $taxonomy = Taxonomy::fromArray(['name' => 'foo', 'pluralName' => 'foos', 'uri' => 'foo']);
         $this->getRepository($taxonomy)->shouldReturn($taxonomies);
     }
