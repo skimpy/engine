@@ -7,14 +7,13 @@ use Skimpy\Database\Populator;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use PhpSpec\Exception\Example\SkippingException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class ContentCacheHandlerSpec extends ObjectBehavior
 {
     function let(Populator $populator, Filesystem $filesystem)
     {
-        $buildIndicator = new SplFileInfo('');
+        $buildIndicator = new SplFileInfo(__DIR__.'/.seeded');
 
         $this->beConstructedWith($populator, $filesystem, $buildIndicator);
     }
@@ -24,36 +23,30 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         $this->shouldHaveType('Skimpy\Http\Middleware\ContentCacheHandler');
     }
 
-    function it_always_rebuild_in_dev_env(
+    function it_always_rebuilds_if_auto_rebuild_config_is_true(
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         Filesystem $filesystem
     ) {
-
-        throw new SkippingException('Update unable to mock SplFileInfo');
-
         $container->get('skimpy.auto_rebuild')->willReturn(true);
 
-        $this->expectRebuild($populator, $filesystem, $buildIndicator);
+        $this->expectRebuild($populator, $filesystem);
 
         $this->handleRequest($request, $container);
     }
 
-    function it_rebuilds_if_no_build_indicator_is_found(
+    function it_builds_the_db_if_there_is_no_db_regardless_of_auto_rebuild(
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         Filesystem $filesystem
     ) {
-        throw new SkippingException('Update unable to mock SplFileInfo');
+        $this->beConstructedWith($populator, $filesystem, new SplFileInfo('non-existent-file'));
 
         $container->get('skimpy.auto_rebuild')->willReturn(false);
-        $buildIndicator->isFile()->willReturn(false);
 
-        $this->expectRebuild($populator, $filesystem, $buildIndicator);
+        $populator->populate()->shouldBeCalled();
 
         $this->handleRequest($request, $container);
     }
@@ -62,14 +55,10 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         Filesystem $filesystem,
         ParameterBag $query
     ) {
-        throw new SkippingException('Update unable to mock SplFileInfo');
-
         $container->get('skimpy.auto_rebuild')->willReturn(false);
-        $buildIndicator->isFile()->willReturn(true);
 
         $request->query = $query;
         $query->has('rebuild')->willReturn(true);
@@ -78,7 +67,7 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         $container->get('skimpy.build_key')->willReturn($buildKey);
         $query->get('rebuild')->willReturn($buildKey);
 
-        $this->expectRebuild($populator, $filesystem, $buildIndicator);
+        $this->expectRebuild($populator, $filesystem);
 
         $this->handleRequest($request, $container);
     }
@@ -87,18 +76,15 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         ParameterBag $query
     ) {
-        throw new SkippingException('Update unable to mock SplFileInfo');
-
         $container->get('skimpy.auto_rebuild')->willReturn(false);
-        $buildIndicator->isFile()->willReturn(true);
 
         $request->query = $query;
         $query->has('rebuild')->willReturn(false);
 
         $populator->populate()->shouldNotBeCalled();
+
         $this->handleRequest($request, $container);
     }
 
@@ -106,13 +92,9 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         ParameterBag $query
     ) {
-        throw new SkippingException('Update unable to mock SplFileInfo');
-
         $container->get('skimpy.auto_rebuild')->willReturn(false);
-        $buildIndicator->isFile()->willReturn(true);
 
         $request->query = $query;
         $query->has('rebuild')->willReturn(true);
@@ -120,6 +102,7 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         $container->get('skimpy.build_key')->willReturn(null);
 
         $populator->populate()->shouldNotBeCalled();
+
         $this->handleRequest($request, $container);
     }
 
@@ -127,13 +110,9 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         Request $request,
         ContainerInterface $container,
         Populator $populator,
-        SplFileInfo $buildIndicator,
         ParameterBag $query
     ) {
-        throw new SkippingException('Update unable to mock SplFileInfo');
-
         $container->get('skimpy.auto_rebuild')->willReturn(false);
-        $buildIndicator->isFile()->willReturn(true);
 
         $request->query = $query;
         $query->has('rebuild')->willReturn(true);
@@ -143,17 +122,17 @@ class ContentCacheHandlerSpec extends ObjectBehavior
         $query->get('rebuild')->willReturn('bar');
 
         $populator->populate()->shouldNotBeCalled();
+
         $this->handleRequest($request, $container);
     }
 
-    protected function expectRebuild($populator, $filesystem, $buildIndicator)
+    protected function expectRebuild($populator, $filesystem)
     {
         $populator->populate()->shouldBeCalled();
 
-        $path = 'path/to/.seeded';
-        $buildIndicator->getPathname()->willReturn($path);
+        $buildIndicatorPath = new SplFileInfo(__DIR__ . '/.seeded');
 
-        $filesystem->remove($path)->shouldBeCalled();
-        $filesystem->dumpFile($path, Argument::type('string'))->shouldBeCalled();
+        $filesystem->remove($buildIndicatorPath)->shouldBeCalled();
+        $filesystem->dumpFile($buildIndicatorPath, Argument::type('string'))->shouldBeCalled();
     }
 }

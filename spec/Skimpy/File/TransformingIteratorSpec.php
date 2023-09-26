@@ -3,17 +3,16 @@
 namespace spec\Skimpy\File;
 
 use spec\Skimpy\ObjectBehavior;
-use Skimpy\Symfony\FinderFactory;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Skimpy\File\Transformer\NullTransformer;
-use PhpSpec\Exception\Example\SkippingException;
 
 class TransformingIteratorSpec extends ObjectBehavior
 {
     function let(NullTransformer $transformer)
     {
         $path = $this->getContentDir();
+
         $this->beConstructedWith($path, $transformer);
     }
 
@@ -22,47 +21,25 @@ class TransformingIteratorSpec extends ObjectBehavior
         $this->shouldHaveType('\Skimpy\File\TransformingIterator');
     }
 
-    function it_filters_by_file_extension(
-        $transformer,
-        FinderFactory $factory,
-        Finder $finder
-    ) {
-        throw new SkippingException(
-            'Update wont mock static return'
-        );
+    function it_filters_by_file_extension($transformer)
+    {
+        $path = $this->getDataDir();
 
-        $path = $this->getContentDir();
-        $this->beConstructedWith($path, $transformer, ['md'], $factory);
+        $this->beConstructedWith($path, $transformer, ['md']);
 
-        $factory->createFinder()->willReturn($finder);
-        $finder->files()->willReturn($finder);
-        $finder->in($path)->shouldBeCalled();
-        $finder->name('(\.md$)')->shouldBeCalled();
-        $finder->getIterator()->willReturn(new \EmptyIterator);
-
-        $this->getIterator();
+        $this->getIterator()->shouldHaveCount(2);
     }
 
-    function it_filters_by_multiple_file_extensions(
-        $transformer,
-        FinderFactory $factory,
-        Finder $finder,
-        \Iterator $iterator
-    ) {
-        throw new SkippingException(
-            'Update wont mock static return'
-        );
+    function it_filters_by_multiple_file_extensions($transformer)
+    {
+        $path = $this->getDataDir();
 
-        $path = $this->getContentDir();
-        $this->beConstructedWith($path, $transformer, ['md', 'yaml'], $factory);
+        $this->beConstructedWith($path, $transformer, ['md', 'yaml']);
 
-        $factory->createFinder()->willReturn($finder);
-        $finder->files()->willReturn($finder);
-        $finder->in($path)->shouldBeCalled();
-        $finder->name('(\.md$|\.yaml$)')->shouldBeCalled();
-        $finder->getIterator()->willReturn($iterator);
-
-        $this->getIterator()->shouldReturn($iterator);
+        # 2 yaml files
+        # +
+        # 2 markdown files
+        $this->getIterator()->shouldHaveCount(4);
     }
 
     function it_transforms_the_current_iteration($transformer, SplFileInfo $file)

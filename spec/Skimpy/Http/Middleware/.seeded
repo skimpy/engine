@@ -1,0 +1,1 @@
+This file exists to test database rebuild functionality. Prophecy can't mock an SPLFileInfo object anymore so we have to use a real file.

@@ -4,18 +4,17 @@ namespace spec\Skimpy;
 
 class ObjectBehavior extends \PhpSpec\ObjectBehavior
 {
-    /**
-     * @return string
-     */
-    protected function getContentDir()
+    protected function getContentDir(): string
     {
         return realpath(__DIR__ . '/../_data/content');
     }
 
-    /**
-     * @return string
-     */
-    protected function getTaxonomyDir()
+    protected function getDataDir(): string
+    {
+        return realpath(__DIR__ . '/../_data');
+    }
+
+    protected function getTaxonomyDir(): string
     {
         return realpath(__DIR__ . '/../_data/taxonomies');
     }
