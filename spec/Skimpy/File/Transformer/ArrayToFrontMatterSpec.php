@@ -63,7 +63,13 @@ class ArrayToFrontMatterSpec extends ObjectBehavior
     function it_transforms_an_array_into_front_matter()
     {
         $data = $this->getData();
+
         $this->transform($data)->shouldReturnAnInstanceOf(FrontMatter::class);
+
+        $fm = $this->transform($data);
+
+        $fm->getTitle()->shouldReturn('The Title');
+        $fm->getDescription()->shouldReturn('The description');
     }
 
     function it_converts_string_to_datetime_when_value_is_string()
