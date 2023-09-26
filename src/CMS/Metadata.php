@@ -18,7 +18,7 @@ trait Metadata
         return $this->metadata;
     }
 
-    public function getMeta(string $key)
+    public function getMeta(string $key): mixed
     {
         return (new ArrayCollection($this->metadata))->get($key);
     }

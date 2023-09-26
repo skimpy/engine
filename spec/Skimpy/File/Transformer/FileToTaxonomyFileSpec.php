@@ -1,10 +1,9 @@
 <?php namespace spec\Skimpy\File\Transformer;
 
-use spec\Skimpy\ObjectBehavior;
-use Prophecy\Argument;
 use Skimpy\File\TaxonomyFile;
-use Symfony\Component\Finder\SplFileInfo;
+use spec\Skimpy\ObjectBehavior;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Finder\SplFileInfo;
 use Skimpy\File\Transformer\TransformationFailure;
 
 class FileToTaxonomyFileSpec extends ObjectBehavior
