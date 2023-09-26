@@ -80,4 +80,11 @@ class EntityResolverSpec extends ObjectBehavior
         $taxonomy = Taxonomy::fromArray(['name' => 'foo', 'pluralName' => 'foos', 'uri' => 'foo']);
         $this->getRepository($taxonomy)->shouldReturn($taxonomies);
     }
+
+    function it_throws_an_exception_if_no_repo_is_found_for_the_entity($unknownEntity)
+    {
+        $unknownEntity->beADoubleOf('Skimpy\Contracts\Entity');
+
+        $this->shouldThrow(\LogicException::class)->during('getRepository', [$unknownEntity]);
+    }
 }
