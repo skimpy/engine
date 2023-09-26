@@ -13,13 +13,25 @@ class ArrayToFrontMatterSpec extends ObjectBehavior
 {
     function let()
     {
-        $category = $this->getCategoryTaxonomy();
-        new Term($category, 'Unix', 'unix');
+        $category = Taxonomy::fromArray([
+            'name'       => 'Category',
+            'pluralName' => 'Categories',
+            'uri'        => 'categories'
+        ]);
 
-        $tag = $this->getTagTaxonomy();
-        new Term($tag, 'Tag 1', 'tag-1');
+        $tag = Taxonomy::fromArray([
+            'name'       => 'Tag',
+            'pluralName' => 'Tags',
+            'uri'        => 'tags'
+        ]);
 
-        $this->beConstructedWith([$category, $tag]);
+        $category->addTerm(new Term($category, 'Unix', 'unix'));
+        $tag->addTerm(new Term($tag, 'Tag 1', 'tag-1'));
+
+        # These are extracted from yaml files in an actual site
+        $registeredTaxonomies = [$category, $tag];
+
+        $this->beConstructedWith($registeredTaxonomies);
     }
 
     function it_is_initializable()
@@ -81,29 +93,5 @@ class ArrayToFrontMatterSpec extends ObjectBehavior
         $this->shouldThrow(new TransformationFailure("The Taxonomy 'Tag' does not contain term 'Wolf'."))
             ->duringTransform($data)
         ;
-    }
-
-    /**
-     * @return Taxonomy
-     */
-    protected function getCategoryTaxonomy()
-    {
-        return Taxonomy::fromArray([
-            'name'       => 'Category',
-            'pluralName' => 'Categories',
-            'uri'        => 'categories'
-        ]);
-    }
-
-    /**
-     * @return Taxonomy
-     */
-    protected function getTagTaxonomy()
-    {
-        return Taxonomy::fromArray([
-            'name'       => 'Tag',
-            'pluralName' => 'Tags',
-            'uri'        => 'tags'
-        ]);
     }
 }
