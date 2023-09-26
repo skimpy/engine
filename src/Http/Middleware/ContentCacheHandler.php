@@ -28,7 +28,6 @@ class ContentCacheHandler
 
     public function handleRequest(Request $request, ContainerInterface $container): void
     {
-        # Rebuild on every request in dev environment
         if ($this->isAutoRebuildMode($container)) {
             $this->rebuildDatabase();
 
