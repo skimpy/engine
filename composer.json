@@ -26,7 +26,7 @@
         "psr/container": "^1.0@dev",
         "laravel-doctrine/orm": "^1.8",
         "rcrowe/twigbridge": "^0.14",
-        "twig/twig": "^3.9"
+        "twig/twig": "3.8.0"
     },
     "require-dev": {
         "phpspec/phpspec": "7.4.0"
