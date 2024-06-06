@@ -32,4 +32,7 @@ return [
 
         'timezone' => env('SITE_TIMEZONE', 'UTC'),
     ],
+
+    'entries_on_home_page' => env('ENTRIES_ON_HOME_PAGE', 5),
 ];
+
