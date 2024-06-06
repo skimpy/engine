@@ -6,7 +6,7 @@ use Skimpy\Http\Controller\GetController;
 $router->get(app('skimpy.uri_prefix'), ['middleware' => ['skimpy.cache'], function () {
     $skimpy = app('skimpy');
 
-    $entries = $skimpy->findBy(['type' => 'entry'], ['date' => 'DESC'], config('skimpy.entries_on_homer_page', 10));
+    $entries = $skimpy->findBy(['type' => 'entry'], ['date' => 'DESC'], config('skimpy.entries_on_home_page', 5));
 
     $data = [
         'seotitle' => 'Home',

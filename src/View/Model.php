@@ -39,6 +39,9 @@ class Model
         return (object) config('skimpy.site');
     }
 
+    /**
+     * Allows for calling methods in twig with parentheses
+     */
     public function __get($method)
     {
         try {
