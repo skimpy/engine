@@ -24,7 +24,6 @@ use Skimpy\Http\Controller\GetController;
 use Skimpy\File\Transformer\FileToTaxonomy;
 use Symfony\Component\Filesystem\Filesystem;
 use Skimpy\Http\Renderer\NegotiatingRenderer;
-use Skimpy\Lumen\Http\ContentCacheMiddleware;
 use Skimpy\File\Transformer\FileToContentFile;
 use Skimpy\File\Transformer\FileToContentItem;
 use Skimpy\File\Transformer\ArrayToFrontMatter;
@@ -62,16 +61,6 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
                 BuildDatabase::class
             ]);
         }
-
-        $router = $this->app->router;
-
-        $router->group([], function ($router) {
-            require __DIR__ . '/../routes.php';
-        });
-
-        $this->app->routeMiddleware([
-            'skimpy.cache' => ContentCacheMiddleware::class,
-        ]);
 
         $this->loadViewsFrom(base_path('site/templates'), 'skimpy');
     }
