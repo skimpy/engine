@@ -6,7 +6,7 @@ namespace Skimpy\Lumen\Providers;
 
 use Skimpy\Lumen\Http\ContentCacheMiddleware;
 
-class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
+class SkimpyRouteProvider extends \Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
