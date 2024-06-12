@@ -30,13 +30,7 @@ class GetController extends BaseController
 
     private function getEntityPath(Request $request): string
     {
-        $path = trim($request->getRequestUri(), '/');
-
-        $queryStringPosition = strpos($path, '?');
-
-        if ($queryStringPosition !== false) {
-            $path = substr($path, 0, $queryStringPosition);
-        }
+        $path = trim($request->getPathInfo(), '/');
 
         return $this->stripPrefix($path);
     }
