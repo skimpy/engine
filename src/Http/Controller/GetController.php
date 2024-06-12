@@ -32,6 +32,9 @@ class GetController extends BaseController
     {
         $path = trim($request->getRequestUri(), '/');
 
+        # remove query string
+        $path = parse_url($path, PHP_URL_PATH);
+
         return $this->stripPrefix($path);
     }
 
