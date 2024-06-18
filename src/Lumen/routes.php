@@ -12,8 +12,16 @@ use Skimpy\Http\Controller\GetController;
 
         $router->get($path, ['middleware' => ['skimpy.cache'], function () use ($config) {
 
+            $params = [
+                'type' => 'entry',
+            ];
+
+            if (!empty($config['pinned'])) {
+                $params['uri'] = $config['pinned'];
+            }
+
             $entries = app('skimpy')->findBy(
-                ['type' => 'entry'],
+                $params,
                 ['date' => 'DESC'],
                 $config['limit']
             );
