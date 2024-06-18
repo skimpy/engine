@@ -1,14 +1,12 @@
 <?php namespace spec\Skimpy\Database;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Mapping\ClassMetadataFactory;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Skimpy\File\ContentIterator;
 use Skimpy\CMS\Taxonomy;
+use PhpSpec\ObjectBehavior;
 use Skimpy\CMS\ContentItem;
+use Skimpy\File\ContentIterator;
+use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 
 class PopulatorSpec extends ObjectBehavior
 {

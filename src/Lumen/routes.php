@@ -3,18 +3,28 @@
 use Illuminate\Http\Request;
 use Skimpy\Http\Controller\GetController;
 
-$router->get(app('skimpy.uri_prefix'), ['middleware' => ['skimpy.cache'], function () {
-    $skimpy = app('skimpy');
+(function($router) {
+    $withEntries = config('skimpy.site.entries');
 
-    $entries = $skimpy->findBy(['type' => 'entry'], ['date' => 'DESC'], config('skimpy.entries_on_home_page', 5));
+    foreach ($withEntries as $index => $config) {
 
-    $data = [
-        'seotitle' => 'Home',
-        'entries'  => $entries
-    ];
+        $path = rtrim(app('skimpy.uri_prefix'), '/') . '/' . ltrim($index, '/');
 
-    return view('home', $data);
-}]);
+        $router->get($path, ['middleware' => ['skimpy.cache'], function () use ($config) {
+
+            $entries = app('skimpy')->findBy(
+                ['type' => 'entry'],
+                ['date' => 'DESC'],
+                $config['limit']
+            );
+
+            return view($config['template'], [
+                'seotitle' => $config['seotitle'],
+                'entries' => $entries,
+            ]);
+        }]);
+    }
+})($router);
 
 $router->get(app('skimpy.uri_prefix') . '{uri:.+}', ['middleware' => ['skimpy.cache'], function ($uri, Request $request) {
 

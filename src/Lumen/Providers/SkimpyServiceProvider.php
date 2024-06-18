@@ -41,9 +41,7 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
-        $this->app->configure('app');
-        $this->app->configure('skimpy');
-
+        $this->configure();
         $this->doctrine();
         $this->databasePopulator();
         $this->repositories();
@@ -63,6 +61,28 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         $this->loadViewsFrom(base_path('site/templates'), 'skimpy');
+    }
+
+    private function configure(): void
+    {
+        $this->app->configure('app');
+        $this->app->configure('skimpy');
+
+        $siteConfigFolder = base_path('/config');
+
+        if (!is_dir($siteConfigFolder)) {
+            return;
+        }
+
+        foreach (glob($siteConfigFolder . '/*.php') as $configFile) {
+            $configKey = basename($configFile, '.php');
+            $configValues = require_once $configFile;
+
+            $this->app['config']->set($configKey, array_replace_recursive(
+                $this->app['config']->get($configKey, []),
+                $configValues
+            ));
+        }
     }
 
     private function doctrine(): void

@@ -1,9 +1,6 @@
 <?php
 
 return [
-    # The base URI to access your blog content, it could be /blog or just "/"
-    'uri_prefix' => '/',
-
     # Enable debug
     'debug' => env('APP_DEBUG', false),
 
@@ -31,8 +28,23 @@ return [
         'date_format' => env('PHP_DATE_FORMAT', 'F jS, Y'),
 
         'timezone' => env('SITE_TIMEZONE', 'UTC'),
+
+        # The URIs that have all entries available in an "entries" view variable
+        'entries' => [
+            '/' => [
+                'template' => 'home',
+                'limit' => 3,
+                'seotitle' => 'Home',
+            ],
+            'articles' => [
+                'template' => 'index',
+                'limit' => null,
+                'seotitle' => 'Articles',
+            ]
+        ]
     ],
 
-    'entries_on_home_page' => env('ENTRIES_ON_HOME_PAGE', 5),
+    # Move your entire skimpy site to a prefix
+    # This is a rare use case
+    'uri_prefix' => '/',
 ];
-
