@@ -94,7 +94,7 @@ class TaxonomySpec extends ObjectBehavior
         $this->getTermByName('Term Name')->shouldReturn($term);
     }
 
-    function it_can_retrieve_one_of_its_terms_by_slug(Term $term)
+    function it_can_retrieve_one_of_its_terms_by_slug()
     {
         $term = new Term($this->getWrappedObject(), 'Term Name', 'term-slug');
         $this->getTermBySlug('term-slug')->shouldReturn($term);
