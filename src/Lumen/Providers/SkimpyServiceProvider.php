@@ -68,15 +68,20 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->configure('app');
         $this->app->configure('skimpy');
 
-        $siteConfigFolder = base_path('/config');
+        $siteConfigFolder = base_path('config');
 
         if (!is_dir($siteConfigFolder)) {
             return;
         }
 
-        foreach (glob($siteConfigFolder . '/*.php') as $configFile) {
+        foreach (glob($siteConfigFolder . '*.php') as $configFile) {
             $configKey = basename($configFile, '.php');
             $configValues = require_once $configFile;
+            $alreadyRequired = is_bool($configValues);
+
+            if ($alreadyRequired) {
+                continue;
+            }
 
             $this->app['config']->set($configKey, array_replace_recursive(
                 $this->app['config']->get($configKey, []),
