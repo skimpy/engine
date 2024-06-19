@@ -8,7 +8,7 @@ return [
         'skimpy' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => app()->runningInConsole() ? __DIR__ . '/../../../../database/skimpy.sqlite' : base_path('database/skimpy.sqlite'),
+            'database' => base_path('database/skimpy.sqlite'),
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ]
     ],
