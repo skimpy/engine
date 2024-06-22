@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Skimpy;
 
+/**
+ * Sets up a Skimpy site as a Lumen application.
+ */
 class Site
 {
-    private $publicDir;
+    private string $publicDir;
 
     public function __construct(string $publicDir)
     {
@@ -19,9 +22,7 @@ class Site
             dirname($this->publicDir)
         ))->bootstrap();
 
-        $app = new Application(
-            dirname($this->publicDir)
-        );
+        $app = new Application(dirname($this->publicDir));
 
         $app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,

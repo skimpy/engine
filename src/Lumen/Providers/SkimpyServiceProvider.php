@@ -39,7 +39,7 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected $app;
 
-    public function register()
+    public function register(): void
     {
         $this->configure();
         $this->doctrine();
@@ -52,7 +52,7 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->controllers();
     }
 
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -65,16 +65,18 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
 
     private function configure(): void
     {
+        # Loads the default configs
+        # at the path Lumen expects them to be.
         $this->app->configure('app');
         $this->app->configure('skimpy');
 
-        $siteConfigFolder = base_path('config');
+        # Trailing slash is required for glob to work
+        $userSiteConfigFolder = base_path('config/');
 
-        if (!is_dir($siteConfigFolder)) {
-            return;
-        }
+        $this->throwIfNoConfig($userSiteConfigFolder);
 
-        foreach (glob($siteConfigFolder . '*.php') as $configFile) {
+        # Merges the users configs in and overrides the engine defaults
+        foreach (glob($userSiteConfigFolder . '*.php') as $configFile) {
             $configKey = basename($configFile, '.php');
             $configValues = require_once $configFile;
             $alreadyRequired = is_bool($configValues);
@@ -216,5 +218,12 @@ class SkimpyServiceProvider extends \Illuminate\Support\ServiceProvider
     private function skimpyPath(): string
     {
         return base_path();
+    }
+
+    private function throwIfNoConfig(string $userSiteConfigFolder): void
+    {
+        if (!is_dir($userSiteConfigFolder)) {
+            throw new \RuntimeException("The directory $userSiteConfigFolder is missing. Please create it and add your configuration files.");
+        }
     }
 }
